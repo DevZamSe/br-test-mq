@@ -47,6 +47,7 @@ func mainWithRc() int {
 	if len(os.Args) >= 4 {
 		msgId = os.Args[3]
 	}
+	msgId = "414d512052504c5931342e434c2e505063ede2df243f9b0b"
 
 	//Nueva conexion
 	logSettings()
