@@ -35,15 +35,6 @@ func mainWithRc() int {
 
 	// Get the queue and queue manager names from command line for overriding
 	// the defaults. Parameters are not required.
-	if len(os.Args) >= 2 {
-		qName = os.Args[1]
-	}
-
-	if len(os.Args) >= 3 {
-		qMgrName = os.Args[2]
-	}
-
-	// Can also provide a msgid as a further command parameter
 	if len(os.Args) >= 4 {
 		msgId = os.Args[1]
 	}
