@@ -47,6 +47,7 @@ func mainWithRc() int {
 	if len(os.Args) >= 4 {
 		msgId = os.Args[1]
 	}
+	log.Println("el msgId es :: ", msgId)
 
 	//Nueva conexion
 	logSettings()
