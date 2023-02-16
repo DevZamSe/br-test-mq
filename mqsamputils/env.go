@@ -68,9 +68,10 @@ func init() {
 	// The .json should have supplied the MQ Endpoints as an array.
 	// If there are no elements, then EnvSettings will be default
 	// initialised to be empty.
-
-	EnvSettings = MQ_ENDPOINTS.Points[num]
-	logger.Println("EnvSettings", EnvSettings)
+	if len(MQ_ENDPOINTS.Points) > 0 {
+		EnvSettings = MQ_ENDPOINTS.Points[0]
+		logger.Println("EnvSettings", EnvSettings)
+	}
 
 	environmentOverides()
 }
