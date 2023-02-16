@@ -94,6 +94,7 @@ func mainWithRc() int {
 	//Nueva conexion
 	logSettings()
 	mqsamputils.EnvSettings.LogSettings()
+	mqsamputils.EnvSettings = mqsamputils.MQ_ENDPOINTS.Points[0]
 	qMgrObject, err := mqsamputils.CreateConnection(mqsamputils.FULL_STRING)
 
 	// This is where we connect to the queue manager. It is assumed

@@ -50,6 +50,7 @@ func mainWithRc() int {
 	//Nueva conexion
 	logSettings()
 	mqsamputils.EnvSettings.LogSettings()
+	mqsamputils.EnvSettings = mqsamputils.MQ_ENDPOINTS.Points[1]
 
 	qMgrObject, err := mqsamputils.CreateConnection(mqsamputils.FULL_STRING)
 
