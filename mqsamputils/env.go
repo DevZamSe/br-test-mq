@@ -51,7 +51,31 @@ var MQ_ENDPOINTS MQEndpoints
 
 const FULL_STRING = -1
 
-func init() {
+func InitPut() {
+	jsonFile, err := os.Open("/usr/local/go/src/mq-ibm-golang/mqsamputils/env.json")
+	defer jsonFile.Close()
+
+	if err != nil {
+		logger.Println(err)
+		return
+	}
+	logger.Println("Successfully Opened env.json")
+
+	byteValue, _ := ioutil.ReadAll(jsonFile)
+	json.Unmarshal(byteValue, &MQ_ENDPOINTS)
+	logger.Println("len(MQ_ENDPOINTS.Points)", len(MQ_ENDPOINTS.Points))
+
+	// The .json should have supplied the MQ Endpoints as an array.
+	// If there are no elements, then EnvSettings will be default
+	// initialised to be empty.
+
+	EnvSettings = MQ_ENDPOINTS.Points[1]
+	logger.Println("EnvSettings", EnvSettings)
+
+	environmentOverides()
+}
+
+func InitGet() {
 	jsonFile, err := os.Open("/usr/local/go/src/mq-ibm-golang/mqsamputils/env.json")
 	defer jsonFile.Close()
 

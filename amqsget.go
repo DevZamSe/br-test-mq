@@ -18,6 +18,7 @@ var qMgrObject ibmmq.MQObject
 var qObject ibmmq.MQObject
 
 func main() {
+	mqsamputils.InitGet()
 	os.Exit(mainWithRc())
 }
 
