@@ -7,5 +7,5 @@ id=`grep MsgId /tmp/putget.out | cut -d: -f2`
 if [ "${id}" != "" ]
 then
   echo "Getting MsgId" ${id}
-  go run amqsget.go SFISERS500A.RESP * ${id}
+  go run amqsget.go ${id}
 fi
