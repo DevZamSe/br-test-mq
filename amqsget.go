@@ -100,7 +100,7 @@ func mainWithRc() int {
 
 		// Set options to wait for a maximum of 3 seconds for any new message to arrive
 		gmo.Options |= ibmmq.MQGMO_WAIT
-		gmo.WaitInterval = 10 * 1000 // The WaitInterval is in milliseconds
+		gmo.WaitInterval = 15 * 1000 // The WaitInterval is in milliseconds
 
 		// If there is a MsgId on the command line decode it into bytes and
 		// set the options for matching it during the Get processing
