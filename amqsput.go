@@ -1,39 +1,4 @@
-/*
- * This is an example of a Go program to put messages to an IBM MQ
- * queue.
- *
- * The queue and queue manager name can be given as parameters on the
- * command line. Defaults are coded in the program.
- * This sample also permits use of environment variables for the
- * parameters, which might be preferable in some container
- * deployments.
- *
- * A single message is put, containing a "hello" and timestamp.
- * Each MQI call prints its success or failure. The MsgId of the
- * put message is also printed so it can be used as an optional
- * selection criterion on the amqsget sample program.
- *
- */
 package main
-
-/*
-  Copyright (c) IBM Corporation 2018,2021
-
-  Licensed under the Apache License, Version 2.0 (the "License");
-  you may not use this file except in compliance with the License.
-  You may obtain a copy of the License at
-
-  http://www.apache.org/licenses/LICENSE-2.0
-
-  Unless required by applicable law or agreed to in writing, software
-  distributed under the License is distributed on an "AS IS" BASIS,
-  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  See the License for the specific language governing permissions and
-  limitations under the license.
-
-   Contributors:
-     Mark Taylor - Initial Contribution
-*/
 
 import (
 	"encoding/hex"
@@ -65,11 +30,11 @@ func mainWithRc() int {
 	// container deployment models.
 	qMgrName := os.Getenv("QMGR")
 	if qMgrName == "" {
-		qMgrName = "QM1"
+		qMgrName = "*"
 	}
 	qName := os.Getenv("QUEUE")
 	if qName == "" {
-		qName = "DEV.QUEUE.1"
+		qName = "SFISERS500A.REQ"
 	}
 	message := os.Args[3]
 	if message == "" {

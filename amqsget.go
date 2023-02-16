@@ -27,8 +27,8 @@ func mainWithRc() int {
 	var msgId string
 
 	// The default queue manager and queue to be used. These can be overridden on command line.
-	qMgrName := "QM1"
-	qName := "DEV.QUEUE.1"
+	qMgrName := "*"
+	qName := "SFISERS500A.RESP"
 
 	fmt.Println("Sample AMQSGET.GO start")
 	fmt.Println("value finall :: ", os.Args[0], "::", os.Args[1], "::", os.Args[2], "::", os.Args[3], "::", os.Args[4])
