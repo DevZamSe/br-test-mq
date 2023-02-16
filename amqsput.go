@@ -53,6 +53,7 @@ var qObject ibmmq.MQObject
 
 // Main function that simply calls a subfunction to ensure defer routines are called before os.Exit happens
 func main() {
+	mqsamputils.initVar(0)
 	os.Exit(mainWithRc())
 }
 
@@ -93,7 +94,7 @@ func mainWithRc() int {
 	//Nueva conexion
 	logSettings()
 	mqsamputils.EnvSettings.LogSettings()
-	qMgrObject, err := mqsamputils.CreateConnection(1)
+	qMgrObject, err := mqsamputils.CreateConnection(mqsamputils.FULL_STRING)
 
 	// This is where we connect to the queue manager. It is assumed
 	// that the queue manager is either local, or you have set the
