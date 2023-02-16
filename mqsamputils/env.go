@@ -51,7 +51,7 @@ var MQ_ENDPOINTS MQEndpoints
 
 const FULL_STRING = -1
 
-func InitPut() {
+func InitGet() {
 	jsonFile, err := os.Open("/usr/local/go/src/mq-ibm-golang/mqsamputils/env.json")
 	defer jsonFile.Close()
 
@@ -75,7 +75,7 @@ func InitPut() {
 	environmentOverides()
 }
 
-func InitGet() {
+func InitPut() {
 	jsonFile, err := os.Open("/usr/local/go/src/mq-ibm-golang/mqsamputils/env.json")
 	defer jsonFile.Close()
 
