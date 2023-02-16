@@ -31,6 +31,7 @@ func mainWithRc() int {
 	qName := "DEV.QUEUE.1"
 
 	fmt.Println("Sample AMQSGET.GO start")
+	fmt.Println("value finall :: ",os.Args[2""])
 
 	// Get the queue and queue manager names from command line for overriding
 	// the defaults. Parameters are not required.
