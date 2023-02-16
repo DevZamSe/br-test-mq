@@ -53,7 +53,6 @@ var qObject ibmmq.MQObject
 
 // Main function that simply calls a subfunction to ensure defer routines are called before os.Exit happens
 func main() {
-	mqsamputils.initVar(0)
 	os.Exit(mainWithRc())
 }
 
