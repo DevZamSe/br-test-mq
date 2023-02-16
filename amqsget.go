@@ -107,7 +107,7 @@ func mainWithRc() int {
 		if msgId != "" {
 			fmt.Println("Setting Match Option for MsgId")
 			gmo.MatchOptions = ibmmq.MQMO_MATCH_MSG_ID
-			getmqmd.MsgId, _ = hex.DecodeString(`414d512052504c5931342e434c2e505063ede2df243fe96c`)
+			getmqmd.MsgId, _ = hex.DecodeString(`[B@c6d62c5f`)
 			// Will only try to get a single message with the MsgId as there should
 			// never be more than one. So set the flag to not retry after the first attempt.
 			msgAvail = false
