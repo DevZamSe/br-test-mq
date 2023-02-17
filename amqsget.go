@@ -1,8 +1,6 @@
 package main
 
 import (
-	"bufio"
-	"bytes"
 	"encoding/hex"
 	"fmt"
 	"log"
@@ -162,28 +160,28 @@ func mainWithRc() int {
 			// Now we can try to get the message
 			datalen, err = qObject.Get(getmqmd, gmo, buffer)
 
-			fmt.Println("======= POC EXTRA =========")
-			for {
-				if err != nil {
-					if err == ibmmq.MQRC_NO_MSG_AVAILABLE {
-						fmt.Println("No more messages")
-						break
-					}
-					fmt.Printf("Error receiving message: %v\n", err)
-					continue
-				}
+			// fmt.Println("======= POC EXTRA =========")
+			// for {
+			// 	if err != nil {
+			// 		if err == ibmmq.MQRC_NO_MSG_AVAILABLE {
+			// 			fmt.Println("No more messages")
+			// 			break
+			// 		}
+			// 		fmt.Printf("Error receiving message: %v\n", err)
+			// 		continue
+			// 	}
 
-				buf := bytes.NewBuffer([]byte(string(datalen)))
-				reader := bufio.NewReader(buf)
-				line, _, err := reader.ReadLine()
-				if err != nil {
-					fmt.Printf("Error reading message: %v\n", err)
-					continue
-				}
+			// 	buf := bytes.NewBuffer([]byte(string(datalen)))
+			// 	reader := bufio.NewReader(buf)
+			// 	line, _, err := reader.ReadLine()
+			// 	if err != nil {
+			// 		fmt.Printf("Error reading message: %v\n", err)
+			// 		continue
+			// 	}
 
-				fmt.Printf("Received message: %s\n", string(line))
-			}
-			fmt.Println("======= FINISH POC EXTRA =========")
+			// 	fmt.Printf("Received message: %s\n", string(line))
+			// }
+			// fmt.Println("======= FINISH POC EXTRA =========")
 
 			if err != nil {
 				msgAvail = false
