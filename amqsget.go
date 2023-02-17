@@ -161,7 +161,7 @@ func mainWithRc() int {
 		} else {
 			// Create a buffer for the message data. This one is large enough
 			// for the messages put by the amqsput sample.
-			buffer := make([]byte, 1024)
+			buffer := make([]byte, 4096)
 
 			// Now we can try to get the message
 			datalen, err = qObject.Get(getmqmd, gmo, buffer)
