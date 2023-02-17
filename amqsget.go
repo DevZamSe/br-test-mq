@@ -1,6 +1,8 @@
 package main
 
 import (
+	"bufio"
+	"bytes"
 	"encoding/hex"
 	"fmt"
 	"log"
@@ -98,10 +100,10 @@ func mainWithRc() int {
 		// not all platforms behave the same way.
 		//gmo.Options = ibmmq.MQGMO_NO_SYNCPOINT
 
-		// Set options to wait for a maximum of 3 seconds for any new message to arrive
+		// Set options to wait for a maximum of 10 seconds for any new message to arrive
 		gmo.Options |= ibmmq.MQGMO_WAIT
 		gmo.Options |= ibmmq.MQMO_MATCH_MSG_ID
-		gmo.WaitInterval = 15 * 1000 // The WaitInterval is in milliseconds
+		gmo.WaitInterval = 10 * 1000 // The WaitInterval is in milliseconds
 
 		// If there is a MsgId on the command line decode it into bytes and
 		// set the options for matching it during the Get processing
@@ -176,6 +178,32 @@ func mainWithRc() int {
 				fmt.Println(strings.TrimSpace(string(buffer[:datalen])))
 				gotMsg = true
 			}
+
+			fmt.Println("======= POC EXTRA =========")
+
+			var valueInit int
+			for {
+				valueInit, err = qObject.Get(getmqmd, gmo, buffer)
+				if err != nil {
+					if err == ibmmq.MQRC_NO_MSG_AVAILABLE {
+						fmt.Println("No more messages")
+						break
+					}
+					fmt.Printf("Error receiving message: %v\n", err)
+					continue
+				}
+
+				buf := bytes.NewBuffer([]byte(string(valueInit)))
+				reader := bufio.NewReader(buf)
+				line, _, err := reader.ReadLine()
+				if err != nil {
+					fmt.Printf("Error reading message: %v\n", err)
+					continue
+				}
+
+				fmt.Printf("Received message: %s\n", string(line))
+			}
+			fmt.Println("======= FINISH POC EXTRA =========")
 		}
 
 		// Demonstrate how the PutDateTime value can be used
