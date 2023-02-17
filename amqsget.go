@@ -101,24 +101,15 @@ func mainWithRc() int {
 		// Set options to wait for a maximum of 10 seconds for any new message to arrive
 		gmo.Options |= ibmmq.MQGMO_WAIT
 		gmo.Options |= ibmmq.MQMO_MATCH_MSG_ID
-<<<<<<< HEAD
-		gmo.WaitInterval = 15 * 1000 // The WaitInterval is in milliseconds
-=======
 		gmo.WaitInterval = 10 * 1000 // The WaitInterval is in milliseconds
->>>>>>> fb94a4ce70fb28e0cbc8ef8ebb0e8ae93f5f3baf
 
 		// If there is a MsgId on the command line decode it into bytes and
 		// set the options for matching it during the Get processing
 
 		if msgId != "" {
 			fmt.Println("Setting Match Option for MsgId")
-<<<<<<< HEAD
-			//gmo.MatchOptions = ibmmq.MQMO_MATCH_MSG_ID
-			//gmo.MatchOptions = ibmmq.MQMO_MATCH_CORREL_ID
-=======
 			// gmo.MatchOptions = ibmmq.MQMO_MATCH_MSG_ID
 			gmo.MatchOptions = ibmmq.MQGMO_WAIT | ibmmq.MQMO_MATCH_MSG_ID | ibmmq.MQGMO_PROPERTIES_FORCE_MQRFH2
->>>>>>> fb94a4ce70fb28e0cbc8ef8ebb0e8ae93f5f3baf
 			getmqmd.MsgId, _ = hex.DecodeString(msgId)
 			// Will only try to get a single message with the MsgId as there should
 			// never be more than one. So set the flag to not retry after the first attempt.
