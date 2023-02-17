@@ -96,10 +96,11 @@ func mainWithRc() int {
 		// The default options are OK, but it's always
 		// a good idea to be explicit about transactional boundaries as
 		// not all platforms behave the same way.
-		gmo.Options = ibmmq.MQGMO_NO_SYNCPOINT
+		//gmo.Options = ibmmq.MQGMO_NO_SYNCPOINT
 
 		// Set options to wait for a maximum of 3 seconds for any new message to arrive
 		gmo.Options |= ibmmq.MQGMO_WAIT
+		gmo.Options |= ibmmq.MQMO_MATCH_MSG_ID
 		gmo.WaitInterval = 15 * 1000 // The WaitInterval is in milliseconds
 
 		// If there is a MsgId on the command line decode it into bytes and
@@ -109,7 +110,7 @@ func mainWithRc() int {
 			fmt.Println("Setting Match Option for MsgId")
 			// gmo.MatchOptions = ibmmq.MQMO_MATCH_MSG_ID
 			gmo.MatchOptions = ibmmq.MQGMO_WAIT | ibmmq.MQMO_MATCH_MSG_ID | ibmmq.MQGMO_PROPERTIES_FORCE_MQRFH2
-			getmqmd.MsgId, _ = hex.DecodeString(msgId + "\n\r")
+			getmqmd.MsgId, _ = hex.DecodeString(msgId)
 			// Will only try to get a single message with the MsgId as there should
 			// never be more than one. So set the flag to not retry after the first attempt.
 			msgAvail = false
@@ -124,7 +125,7 @@ func mainWithRc() int {
 		// return value.
 		//
 		// This boolean just determines which Get variation is demonstrated in the sample
-		useGetSlice := true
+		useGetSlice := false //TODO: probar tambien por true
 		if useGetSlice {
 			// Create a buffer for the message data. This one is large enough
 			// for the messages put by the amqsput sample. Note that in this case
