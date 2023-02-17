@@ -112,7 +112,7 @@ func mainWithRc() int {
 		// pmo.Options = ibmmq.MQPMO_NO_SYNCPOINT
 
 		// Tell MQ what the message body format is. In this case, a text string
-		// putmqmd.Format = ibmmq.MQFMT_STRING
+		putmqmd.Format = ibmmq.MQFMT_STRING
 
 		// putmqmd.ReplyToQMgr = "SFISERS500A.RESP"
 		putmqmd.ReplyToQ = "SFISERS500A.RESP"
