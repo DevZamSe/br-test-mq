@@ -1,4 +1,4 @@
-module ibm-mq-ejemplo
+module mq-ibm-golang
 
 go 1.17
 

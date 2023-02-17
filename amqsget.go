@@ -1,10 +1,9 @@
 package main
 
 import (
-	"encoding/hex"
 	"fmt"
-	"ibm-mq-ejemplo/mqsamputils"
 	"log"
+	"mq-ibm-golang/mqsamputils"
 	"os"
 	"strings"
 	"time"
@@ -29,17 +28,18 @@ func mainWithRc() int {
 	var msgId string
 
 	// The default queue manager and queue to be used. These can be overridden on command line.
-	qMgrName := "*"
-	qName := "SFISERS500A.RESP"
+	//qMgrName := "*"
+	//qName := "SFISERS500A.RESP"
 
 	fmt.Println("Sample AMQSGET.GO start")
-	fmt.Println("value finall :: ", os.Args[0], "::", os.Args[1], "::", os.Args[2], "::", os.Args[3], "::", os.Args[4])
+	fmt.Println("value final :: ", os.Args[1])
 
 	// Get the queue and queue manager names from command line for overriding
 	// the defaults. Parameters are not required.
-	if len(os.Args) >= 4 {
+	if len(os.Args) >= 1 {
 		msgId = os.Args[1]
 	}
+
 	log.Println("el msgId es :: ", msgId)
 	sEnc := b64.StdEncoding.EncodeToString([]byte(msgId))
 
@@ -51,6 +51,9 @@ func mainWithRc() int {
 	mqsamputils.EnvSettings = mqsamputils.MQ_ENDPOINTS.Points[1]
 
 	qMgrObject, err := mqsamputils.CreateConnection(mqsamputils.FULL_STRING)
+	//
+	qMgrName := mqsamputils.EnvSettings.QManager
+	qName := mqsamputils.EnvSettings.QueueName
 
 	// This is where we connect to the queue manager. It is assumed
 	// that the queue manager is either local, or you have set the
@@ -116,7 +119,8 @@ func mainWithRc() int {
 			fmt.Println("Setting Match Option for MsgId")
 			//gmo.MatchOptions = ibmmq.MQMO_MATCH_MSG_ID
 			//gmo.MatchOptions = ibmmq.MQGMO_WAIT | ibmmq.MQMO_MATCH_MSG_ID | ibmmq.MQGMO_PROPERTIES_FORCE_MQRFH2
-			getmqmd.MsgId, _ = hex.DecodeString(msgId)
+			//getmqmd.MsgId, _ = hex.DecodeString(msgId)
+			getmqmd.MsgId, _ = b64.StdEncoding.DecodeString(msgId)
 			// Will only try to get a single message with the MsgId as there should
 			// never be more than one. So set the flag to not retry after the first attempt.
 			msgAvail = false
@@ -131,12 +135,12 @@ func mainWithRc() int {
 		// return value.
 		//
 		// This boolean just determines which Get variation is demonstrated in the sample
-		useGetSlice := false //TODO: probar tambien por true
+		useGetSlice := true //TODO: probar tambien por true
 		if useGetSlice {
 			// Create a buffer for the message data. This one is large enough
 			// for the messages put by the amqsput sample. Note that in this case
 			// the make() operation is just allocating space - len(buffer)==0 initially.
-			buffer := make([]byte, 0, 1024)
+			buffer := make([]byte, 0, 4096)
 
 			// Now we can try to get the message. This operation returns
 			// a buffer that can be used directly.

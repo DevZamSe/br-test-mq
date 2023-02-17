@@ -1,12 +1,13 @@
 package main
 
 import (
-	"encoding/hex"
 	"fmt"
-	"ibm-mq-ejemplo/mqsamputils"
 	"log"
+	"mq-ibm-golang/mqsamputils"
 	"os"
 	"strings"
+
+	b64 "encoding/base64"
 
 	"github.com/ibm-messaging/mq-golang/v5/ibmmq"
 )
@@ -28,39 +29,42 @@ func mainWithRc() int {
 	// The default queue manager and queue to be used. These can be overridden on command line.
 	// Environment variables can also be used as that works well in a number of common
 	// container deployment models.
-	qMgrName := os.Getenv("QMGR")
-	if qMgrName == "" {
-		qMgrName = "*"
-	}
-	qName := os.Getenv("QUEUE")
-	if qName == "" {
-		qName = "SFISERS500A.REQ"
-	}
-	message := os.Args[3]
-	if message == "" {
-		message = `<MWAS><Hdr><Servicio>SFISERS500A</Servicio></Hdr><Datos>0000000000SFISERS500A                                       0000000000000039999    000100010001CL117647120034000000516281569390226653      00000002333320230210115801122023021011580100000015259990001152000000000010000000000200001382317927028500000001000000000007704BANCO RIPLEY                                      152120012202302101158010001152000000000000000004           0000000000000000009002023021000000000000000                0000000000000000000800000000000000000000108418370  00200000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000</Datos></MWAS>`
-	}
+	//qMgrName := "*"
+	//qName := "SFISERS500A.REQ"
+
+	//if message == "" {
+	//	message = `<MWAS><Hdr><Servicio>SFISERS500A</Servicio></Hdr><Datos>0000000000SFISERS500A                                       0000000000000039999    000100010001CL117647120034000000516281569390226653      00000002333320230210115801122023021011580100000015259990001152000000000010000000000200001382317927028500000001000000000007704BANCO RIPLEY                                      152120012202302101158010001152000000000000000004           0000000000000000009002023021000000000000000                0000000000000000000800000000000000000000108418370  00200000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000</Datos></MWAS>`
+	//}
 
 	fmt.Println("Sample AMQSPUT.GO start")
 
 	// Get the queue and queue manager names from command line for overriding
 	// the defaults. Parameters are not required.
+	//if len(os.Args) >= 2 {
+	//	qName = os.Args[1]
+	//}
+
+	//if len(os.Args) >= 3 {
+	//	qMgrName = os.Args[2]
+	//}
+
+	qName2 := "SFISERS500A.RESP"
 	if len(os.Args) >= 2 {
-		qName = os.Args[1]
+		qName2 = os.Args[1]
+	}
+	message := `<MWAS><Hdr><Servicio>SFISERS500A</Servicio></Hdr><Datos>0000000000SFISERS500A                                       0000000000000039999    000100010001CL117647120034000000516281569390226653      00000002333320230210115801122023021011580100000015259990001152000000000010000000000200001382317927028500000001000000000007704BANCO RIPLEY                                      152120012202302101158010001152000000000000000004           0000000000000000009002023021000000000000000                0000000000000000000800000000000000000000108418370  00200000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000</Datos></MWAS>`
+	if len(os.Args) >= 2 {
+		message = os.Args[2]
 	}
 
-	if len(os.Args) >= 3 {
-		qMgrName = os.Args[2]
-	}
-
-	if len(os.Args) >= 4 {
-		message = os.Args[3]
-	}
 	//Nueva conexion
 	logSettings()
 	mqsamputils.EnvSettings.LogSettings()
 	mqsamputils.EnvSettings = mqsamputils.MQ_ENDPOINTS.Points[1]
 	qMgrObject, err := mqsamputils.CreateConnection(mqsamputils.FULL_STRING)
+	//
+	qMgrName := mqsamputils.EnvSettings.QManager
+	qName := mqsamputils.EnvSettings.QueueName
 
 	// This is where we connect to the queue manager. It is assumed
 	// that the queue manager is either local, or you have set the
@@ -115,11 +119,11 @@ func mainWithRc() int {
 		putmqmd.Format = ibmmq.MQFMT_STRING
 
 		// putmqmd.ReplyToQMgr = "SFISERS500A.RESP"
-		putmqmd.ReplyToQ = "SFISERS500A.RESP"
+		putmqmd.ReplyToQ = qName2
 
 		// And create the contents to include a timestamp just to prove when it was created
 		//msgData := "Hello from Go at " + time.Now().Format(time.RFC3339)
-		msgData := `<MWAS><Hdr><Servicio>SFISERS500A</Servicio></Hdr><Datos>0000000000SFISERS500A                                       0000000000000039999    000100010001CL117647120034000000516281569390226653      00000002333320230210115801122023021011580100000015259990001152000000000010000000000200001382317927028500000001000000000007704BANCO RIPLEY                                      152120012202302101158010001152000000000000000004           0000000000000000009002023021000000000000000                0000000000000000000800000000000000000000108418370  00200000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000</Datos></MWAS>`
+		msgData := message
 
 		// The message is always sent as bytes, so has to be converted before the PUT.
 		buffer := []byte(msgData)
@@ -132,7 +136,10 @@ func mainWithRc() int {
 		} else {
 			fmt.Println("Put message to", strings.TrimSpace(qObject.Name))
 			// Print the MsgId so it can be used as a parameter to amqsget
-			fmt.Println("MsgId:" + hex.EncodeToString(putmqmd.MsgId))
+			//fmt.Println("MsgId:" + hex.EncodeToString(putmqmd.MsgId))
+			// Para casos particulares se obtiene el mensaje en base64
+			sEnc := b64.StdEncoding.EncodeToString([]byte(putmqmd.MsgId))
+			fmt.Println("MsgId:" + sEnc)
 		}
 	}
 
