@@ -108,8 +108,8 @@ func mainWithRc() int {
 
 		if msgId != "" {
 			fmt.Println("Setting Match Option for MsgId")
-			// gmo.MatchOptions = ibmmq.MQMO_MATCH_MSG_ID
-			gmo.MatchOptions = ibmmq.MQGMO_WAIT | ibmmq.MQMO_MATCH_MSG_ID | ibmmq.MQGMO_PROPERTIES_FORCE_MQRFH2
+			//gmo.MatchOptions = ibmmq.MQMO_MATCH_MSG_ID
+			//gmo.MatchOptions = ibmmq.MQGMO_WAIT | ibmmq.MQMO_MATCH_MSG_ID | ibmmq.MQGMO_PROPERTIES_FORCE_MQRFH2
 			getmqmd.MsgId, _ = hex.DecodeString(msgId)
 			// Will only try to get a single message with the MsgId as there should
 			// never be more than one. So set the flag to not retry after the first attempt.
@@ -125,7 +125,7 @@ func mainWithRc() int {
 		// return value.
 		//
 		// This boolean just determines which Get variation is demonstrated in the sample
-		useGetSlice := false //TODO: probar tambien por true
+		useGetSlice := true //TODO: probar tambien por true
 		if useGetSlice {
 			// Create a buffer for the message data. This one is large enough
 			// for the messages put by the amqsput sample. Note that in this case
