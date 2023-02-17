@@ -95,7 +95,7 @@ func mainWithRc() int {
 		} else {
 			// Make sure we close the queue once we're done with it
 			fmt.Println("Opened queue", qObject.Name)
-			defer close(qObject)
+			// defer close(qObject)
 		}
 	}
 
