@@ -125,7 +125,7 @@ func mainWithRc() int {
 		// return value.
 		//
 		// This boolean just determines which Get variation is demonstrated in the sample
-		useGetSlice := true
+		useGetSlice := false //TODO: probar tambien por true
 		if useGetSlice {
 			// Create a buffer for the message data. This one is large enough
 			// for the messages put by the amqsput sample. Note that in this case
