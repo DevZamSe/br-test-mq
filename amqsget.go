@@ -69,7 +69,7 @@ func mainWithRc() int {
 
 		// We have to say how we are going to use this queue. In this case, to GET
 		// messages. That is done in the openOptions parameter.
-		openOptions := ibmmq.MQOO_INPUT_EXCLUSIVE
+		openOptions := ibmmq.MQOO_INPUT_AS_Q_DEF
 
 		// Opening a QUEUE (rather than a Topic or other object type) and give the name
 		mqod.ObjectType = ibmmq.MQOT_Q
