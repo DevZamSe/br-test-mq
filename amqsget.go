@@ -9,6 +9,8 @@ import (
 	"strings"
 	"time"
 
+	b64 "encoding/base64"
+
 	"github.com/ibm-messaging/mq-golang/v5/ibmmq"
 )
 
@@ -39,6 +41,7 @@ func mainWithRc() int {
 		msgId = os.Args[1]
 	}
 	log.Println("el msgId es :: ", msgId)
+	log.Println("el msgId b64 es :: ", b64.StdEncoding.DecodeString(msgId))
 
 	//Nueva conexion
 	logSettings()
