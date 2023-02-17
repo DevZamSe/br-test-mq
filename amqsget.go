@@ -41,8 +41,9 @@ func mainWithRc() int {
 		msgId = os.Args[1]
 	}
 	log.Println("el msgId es :: ", msgId)
-	test, _ := b64.StdEncoding.DecodeString(msgId)
-	log.Println("el msgId b64 es :: ", test)
+	sEnc := b64.StdEncoding.EncodeToString([]byte(msgId))
+
+	log.Println("el msgId b64 es :: ", sEnc)
 
 	//Nueva conexion
 	logSettings()
