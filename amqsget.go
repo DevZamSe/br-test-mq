@@ -101,7 +101,7 @@ func mainWithRc() int {
 		// The default options are OK, but it's always
 		// a good idea to be explicit about transactional boundaries as
 		// not all platforms behave the same way.
-		//gmo.Options = ibmmq.MQGMO_NO_SYNCPOINT
+		gmo.Options = ibmmq.MQGMO_NO_SYNCPOINT
 
 		// Set options to wait for a maximum of 10 seconds for any new message to arrive
 		gmo.Options |= ibmmq.MQGMO_WAIT
