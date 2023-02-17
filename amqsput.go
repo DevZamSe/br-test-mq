@@ -3,8 +3,8 @@ package main
 import (
 	"encoding/hex"
 	"fmt"
+	"ibm-mq-ejemplo/mqsamputils"
 	"log"
-	"mq-ibm-golang/mqsamputils"
 	"os"
 	"strings"
 
