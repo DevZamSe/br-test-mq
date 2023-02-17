@@ -114,7 +114,8 @@ func mainWithRc() int {
 		// Tell MQ what the message body format is. In this case, a text string
 		putmqmd.Format = ibmmq.MQFMT_STRING
 
-		putmqmd.ReplyToQMgr = "SFISERS500A.RESP"
+		// putmqmd.ReplyToQMgr = "SFISERS500A.RESP"
+		putmqmd.ReplyToQ = "SFISERS500A.RESP"
 
 		// And create the contents to include a timestamp just to prove when it was created
 		//msgData := "Hello from Go at " + time.Now().Format(time.RFC3339)
