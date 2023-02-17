@@ -101,6 +101,7 @@ func mainWithRc() int {
 		// Set options to wait for a maximum of 10 seconds for any new message to arrive
 		gmo.Options |= ibmmq.MQGMO_WAIT
 		gmo.Options |= ibmmq.MQMO_MATCH_MSG_ID
+		gmo.Options |= ibmmq.MQGMO_ACCEPT_TRUNCATED_MSG
 		gmo.WaitInterval = 10 * 1000 // The WaitInterval is in milliseconds
 
 		// If there is a MsgId on the command line decode it into bytes and
