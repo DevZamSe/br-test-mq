@@ -25,25 +25,24 @@ func main() {
 
 // The real main function is here to set a return code.
 func mainWithRc() int {
-	var msgId string
 
 	// The default queue manager and queue to be used. These can be overridden on command line.
 	//qMgrName := "*"
 	//qName := "SFISERS500A.RESP"
 
 	fmt.Println("Sample AMQSGET.GO start")
-	fmt.Println("value final :: ", os.Args[1])
 
 	// Get the queue and queue manager names from command line for overriding
 	// the defaults. Parameters are not required.
+	msgId := ""
 	if len(os.Args) >= 1 {
 		msgId = os.Args[1]
 	}
 
-	log.Println("el msgId es :: ", msgId)
-	sEnc := b64.StdEncoding.EncodeToString([]byte(msgId))
+	//log.Println("el msgId es :: ", msgId)
+	//sEnc := b64.StdEncoding.EncodeToString([]byte(msgId))
 
-	log.Println("el msgId b64 es :: ", sEnc)
+	//log.Println("el msgId b64 es :: ", sEnc)
 
 	//Nueva conexion
 	logSettings()

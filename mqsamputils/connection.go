@@ -158,11 +158,11 @@ func openQueue(qMgrObject ibmmq.MQQueueManager, replyToQ string, msgStyle string
 	switch msgStyle {
 	case Put:
 		mqod.ObjectType = ibmmq.MQOT_Q
-		mqod.ObjectName = env.QueueName + "RESP"
+		mqod.ObjectName = env.QueueName //+ "RESP"
 	case Get:
 		openOptions = ibmmq.MQOO_INPUT_EXCLUSIVE
 		mqod.ObjectType = ibmmq.MQOT_Q
-		mqod.ObjectName = env.QueueName + "REQ"
+		mqod.ObjectName = env.QueueName //+ "REQ"
 	case Pub:
 		mqod.ObjectType = ibmmq.MQOT_TOPIC
 		mqod.ObjectString = env.Topic
